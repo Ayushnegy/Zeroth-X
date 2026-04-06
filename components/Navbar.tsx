@@ -18,6 +18,7 @@ export default async function Navbar() {
           <div className="flex items-center gap-4 sm:gap-6 font-mono text-sm leading-none">
             {session ? (
               <>
+                <Link href="/dashboard" className="text-secondaryText hover:text-primary transition-colors hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]">Dashboard</Link>
                 <Link href="/feed" className="text-secondaryText hover:text-primary transition-colors hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]">Find Issues</Link>
                 <Link href="/bookmarks" className="text-secondaryText hover:text-primary transition-colors hover:drop-shadow-[0_0_8px_rgba(0,212,255,0.4)]">Bookmarks</Link>
                 <div className="flex items-center gap-3 sm:ml-4 sm:pl-4 sm:border-l border-border h-6">

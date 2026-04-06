@@ -78,3 +78,38 @@ export async function fetchRepoDetails(repoFullName: string, accessToken?: strin
     language: data.language,
   };
 }
+
+export async function fetchUserContributions(username: string, accessToken?: string) {
+  const queryParts = [
+    `author:${username}`,
+    'is:public'
+  ];
+
+  const q = encodeURIComponent(queryParts.join(' '));
+  const url = `https://api.github.com/search/issues?q=${q}&sort=created&order=desc&per_page=100`;
+
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (accessToken && accessToken !== 'undefined') {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  const response = await fetch(url, {
+    headers,
+    next: { revalidate: 3600 },
+  });
+
+  if (!response.ok) {
+    if (response.status === 403 || response.status === 429) {
+      console.warn(`GitHub API rate limit exceeded when fetching contributions for ${username}.`);
+      return [];
+    }
+    console.error(`Failed to fetch contributions from GitHub: ${response.statusText}`);
+    return [];
+  }
+
+  const data = await response.json();
+  return data.items || [];
+}
