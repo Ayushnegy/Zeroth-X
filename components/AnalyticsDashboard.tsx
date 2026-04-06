@@ -146,6 +146,8 @@ export default function AnalyticsDashboard() {
         }
         const json = await res.json();
         setData(json);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
       } catch (err: any) {
         setError(err.message || 'An error occurred');
       } finally {
