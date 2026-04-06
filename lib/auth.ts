@@ -38,12 +38,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        const user = session.user as any;
-        user.accessToken = token.accessToken;
-        user.userId = token.userId;
-        user.username = token.username;
-        user.avatar = token.avatar;
-        user.provider = token.provider;
+        session.user.accessToken = token.accessToken as string | undefined;
+        session.user.userId = token.userId as string | undefined;
+        session.user.username = token.username as string | undefined;
+        session.user.avatar = token.avatar as string | undefined;
+        session.user.provider = token.provider as string | undefined;
       }
       return session
     },
