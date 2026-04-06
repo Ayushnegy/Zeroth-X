@@ -9,7 +9,7 @@ export async function searchGithubIssues(languages: string[], accessToken: strin
   const allItems = results.flat();
   const uniqueItems = Array.from(new Map(allItems.map(item => [item.id, item])).values());
   
-  uniqueItems.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  uniqueItems.sort((a: { created_at: string }, b: { created_at: string }) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   
   return uniqueItems.slice(0, 50);
 }

@@ -3,7 +3,20 @@ import { Bookmark, Clock, GitBranch, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface IssueCardProps {
-  issue: any; // Using any for prototyping ease
+  issue: {
+    issueId: number;
+    title: string;
+    url: string;
+    repoName: string;
+    repoOwner: string;
+    labels: string[];
+    language?: string;
+    stars?: number;
+    relevanceScore?: number;
+    createdAt?: string;
+    savedAt?: string;
+    [key: string]: unknown;
+  };
   onBookmarkToggle?: (issueId: number) => void;
   isBookmarked?: boolean;
 }

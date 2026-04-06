@@ -18,17 +18,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && profile) {
         token.accessToken = account.access_token
         token.githubId = profile.id?.toString() || account.providerAccountId
-        token.username = (profile as any).login
+        token.username = (profile as { login?: string }).login
         token.avatar = profile.avatar_url
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).accessToken = token.accessToken;
-        (session.user as any).githubId = token.githubId;
-        (session.user as any).username = token.username;
-        (session.user as any).avatar = token.avatar;
+        const user = session.user as unknown as Record<string, unknown>;
+        user.accessToken = token.accessToken;
+        user.githubId = token.githubId;
+        user.username = token.username;
+        user.avatar = token.avatar;
       }
       return session
     },

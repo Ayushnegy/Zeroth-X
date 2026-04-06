@@ -63,7 +63,7 @@ export default function SkillsPage() {
   return (
     <>
       <main className="max-w-4xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Let's set up your profile</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Let&apos;s set up your profile</h1>
         <p className="text-secondaryText mb-10">Select your skills so we can find the best issues for you.</p>
 
         <div className="space-y-8 bg-card p-6 md:p-10 rounded-2xl border border-border shadow-sm">
@@ -130,7 +130,7 @@ export default function SkillsPage() {
                     name="experience" 
                     value={level} 
                     checked={experience === level}
-                    onChange={(e) => setExperience(e.target.value as any)}
+                    onChange={(e) => setExperience(e.target.value as 'beginner'|'intermediate'|'advanced')}
                     className="w-4 h-4 text-primary bg-background border-border focus:ring-primary focus:ring-2"
                   />
                   <span className="capitalize">{level}</span>

@@ -5,10 +5,23 @@ import SkeletonCard from '@/components/SkeletonCard';
 import EmptyState from '@/components/EmptyState';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+interface Issue {
+  issueId: number;
+  title: string;
+  url: string;
+  repoName: string;
+  repoOwner: string;
+  labels: string[];
+  language?: string;
+  stars?: number;
+  relevanceScore: number;
+  createdAt: string;
+  [key: string]: unknown;
+}
 
 export default function FeedClient() {
   const router = useRouter();
-  const [issues, setIssues] = useState<any[]>([]);
+  const [issues, setIssues] = useState<Issue[]>([]);
   const [bookmarks, setBookmarks] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +41,7 @@ export default function FeedClient() {
       fetch('/api/bookmarks').then(res => res.json())
     ]).then(([recommendData, bookmarksData]) => {
       setIssues(recommendData.error ? [] : recommendData);
-      setBookmarks(new Set((bookmarksData || []).map((b: any) => b.issueId)));
+      setBookmarks(new Set((bookmarksData || []).map((b: { issueId: number }) => b.issueId)));
       setLoading(false);
     }).catch(console.error);
   }, [router]);
@@ -48,21 +61,23 @@ export default function FeedClient() {
         await fetch(`/api/bookmarks/${issueId}`, { method: 'DELETE' });
       } else {
         const issue = issues.find(i => i.issueId === issueId);
-        await fetch('/api/bookmarks', {
-          method: 'POST',
-          body: JSON.stringify({
-            issueId,
-            title: issue.title,
-            url: issue.url,
-            repoName: issue.repoName,
-            repoOwner: issue.repoOwner,
-            labels: issue.labels,
-            language: issue.language,
-            stars: issue.stars
-          })
-        });
+        if (issue) {
+          await fetch('/api/bookmarks', {
+            method: 'POST',
+            body: JSON.stringify({
+              issueId,
+              title: issue.title,
+              url: issue.url,
+              repoName: issue.repoName,
+              repoOwner: issue.repoOwner,
+              labels: issue.labels,
+              language: issue.language,
+              stars: issue.stars
+            })
+          });
+        }
       }
-    } catch (e) {
+    } catch {
       setBookmarks(prev => {
         const next = new Set(prev);
         if (!isBookmarked) next.delete(issueId);
@@ -99,7 +114,7 @@ export default function FeedClient() {
         </div>
       ) : filteredIssues.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-          {filteredIssues.map((issue: any) => (
+          {filteredIssues.map((issue: Issue) => (
             <IssueCard
               key={issue.issueId}
               issue={issue}

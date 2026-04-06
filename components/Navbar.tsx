@@ -21,6 +21,7 @@ export default async function Navbar() {
                 <Link href="/bookmarks" className="text-secondaryText hover:text-foreground text-sm sm:text-base font-medium transition-colors">Bookmarks</Link>
                 <div className="flex items-center gap-3 sm:ml-4 sm:pl-4 sm:border-l border-border">
                   <span className="hidden sm:inline-block text-sm font-semibold">{session.user?.username || session.user?.name}</span>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   {session.user?.avatar ? (
                     <img src={session.user.avatar as string} alt="avatar" className="w-8 h-8 rounded-full border border-border" />
                   ) : null}

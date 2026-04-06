@@ -22,7 +22,7 @@ export default async function Home() {
             Find Your First <br /> <span className="text-primary">Open Source</span> Contribution
           </h1>
           <p className="text-xl text-secondaryText max-w-2xl mx-auto">
-            Stop searching blindly. Tell us your skills and we'll instantly match you with beginner-friendly issues from real GitHub repositories.
+            Stop searching blindly. Tell us your skills and we&apos;ll instantly match you with beginner-friendly issues from real GitHub repositories.
           </p>
           <div className="pt-8">
             <form action={async () => { "use server"; const { signIn } = await import('@/lib/auth'); await signIn('github', { redirectTo: '/skills' }); }}>

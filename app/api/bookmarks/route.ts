@@ -11,8 +11,8 @@ export async function GET() {
     await dbConnect();
     const bookmarks = await Bookmark.find({ githubId: session.user.githubId }).sort({ savedAt: -1 });
     return NextResponse.json(bookmarks);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   }
 }
 
@@ -35,8 +35,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(bookmark, { status: 201 });
-  } catch (error: any) {
-    if (error.code === 11000) return NextResponse.json({ error: 'Already bookmarked' }, { status: 409 });
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'code' in error && (error as { code?: number }).code === 11000) return NextResponse.json({ error: 'Already bookmarked' }, { status: 409 });
+    return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   }
 }

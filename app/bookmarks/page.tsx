@@ -5,8 +5,23 @@ import EmptyState from '@/components/EmptyState';
 import SkeletonCard from '@/components/SkeletonCard';
 import { useState, useEffect } from 'react';
 
+interface Issue {
+  issueId: number;
+  title: string;
+  url: string;
+  repoName: string;
+  repoOwner: string;
+  labels: string[];
+  language?: string;
+  stars?: number;
+  relevanceScore?: number;
+  createdAt?: string;
+  savedAt?: string;
+  [key: string]: unknown;
+}
+
 export default function BookmarksPage() {
-  const [bookmarks, setBookmarks] = useState<any[]>([]);
+  const [bookmarks, setBookmarks] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,7 +40,7 @@ export default function BookmarksPage() {
     
     try {
       await fetch(`/api/bookmarks/${issueId}`, { method: 'DELETE' });
-    } catch (e) {
+    } catch {
       alert('Failed to remove bookmark');
     }
   };

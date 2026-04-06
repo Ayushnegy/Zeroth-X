@@ -11,7 +11,19 @@ export interface RankedIssue {
   relevanceScore: number;
 }
 
-export function rankIssues(issues: any[], userSkills: string[]): RankedIssue[] {
+interface RawIssue {
+  number: number;
+  title: string;
+  html_url: string;
+  repository_url: string;
+  labels?: Array<{ name: string }>;
+  body?: string;
+  stars?: number;
+  language?: string;
+  created_at: string;
+}
+
+export function rankIssues(issues: RawIssue[], userSkills: string[]): RankedIssue[] {
   const lowercaseSkills = userSkills.map(s => s.toLowerCase());
 
   return issues.map(issue => {
@@ -21,7 +33,7 @@ export function rankIssues(issues: any[], userSkills: string[]): RankedIssue[] {
     const repoOwner = repoParts[repoParts.length - 2];
     const repoName = repoParts[repoParts.length - 1];
 
-    const labels = (issue.labels || []).map((l: any) => l.name);
+    const labels = (issue.labels || []).map((l: { name: string }) => l.name);
 
     // 1. Label signals (Max 30)
     const hasGoodFirst = labels.some((l: string) => l.toLowerCase() === 'good first issue');
@@ -44,7 +56,7 @@ export function rankIssues(issues: any[], userSkills: string[]): RankedIssue[] {
         } else if (regex.test(searchableBody) || regex.test(searchableLabels)) {
           skillScore += 8;
         }
-      } catch (e) {
+      } catch {
         if (searchableTitle.includes(skill)) skillScore += 15;
         else if (searchableBody.includes(skill) || searchableLabels.includes(skill)) skillScore += 8;
       }
