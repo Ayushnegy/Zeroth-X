@@ -2,6 +2,8 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import AnalyticsDashboard from '@/components/AnalyticsDashboard';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Dashboard | FirstPR Pro',
   description: 'Track your open source contributions and check your progress.',
