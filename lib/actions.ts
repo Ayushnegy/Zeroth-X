@@ -7,5 +7,5 @@ export async function handleSignOut() {
 }
 
 export async function handleSignIn(provider: 'github' | 'google' = 'github') {
-  await signIn(provider, { redirectTo: '/feed' });
+  await signIn(provider, { redirectTo: '/skills' });
 }
