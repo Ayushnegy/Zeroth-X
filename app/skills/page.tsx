@@ -170,34 +170,34 @@ export default function SkillsPage() {
 
           </div>
         </motion.div>
-      </main>
 
-      {/* Floating Sticky Button */}
-      <AnimatePresence>
-        {totalSelected > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            className="fixed bottom-8 left-0 right-0 flex justify-center z-50 pointer-events-none px-4"
-          >
-            <button 
-              onClick={handleSave} 
-              disabled={saving}
-              className="pointer-events-auto relative group flex items-center gap-4 bg-foreground text-darkbase font-bold text-lg px-8 py-4 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-transform hover:scale-105 active:scale-95 border border-white/20"
+        {/* Floating Sticky Button */}
+        <AnimatePresence>
+          {totalSelected > 0 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              className="sticky bottom-10 mt-12 flex justify-center z-40 px-4"
             >
-              <div className="absolute inset-0 rounded-full bg-white blur-md opacity-20 group-hover:opacity-40 transition duration-300"></div>
-              <span className="relative z-10">{saving ? 'Saving...' : 'Continue'}</span>
-              {!saving && (
-                <div className="relative z-10 flex items-center gap-2">
-                   <div className="bg-darkbase text-white text-xs px-2 py-0.5 rounded-full font-mono">{totalSelected}</div>
-                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </div>
-              )}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <button 
+                onClick={handleSave} 
+                disabled={saving}
+                className="relative group flex items-center gap-4 bg-foreground text-darkbase font-bold text-lg px-8 py-4 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-transform hover:scale-105 active:scale-95 border border-white/20"
+              >
+                <div className="absolute inset-0 rounded-full bg-white blur-md opacity-20 group-hover:opacity-40 transition duration-300"></div>
+                <span className="relative z-10">{saving ? 'Saving...' : 'Continue'}</span>
+                {!saving && (
+                  <div className="relative z-10 flex items-center gap-2">
+                     <div className="bg-darkbase text-white text-xs px-2 py-0.5 rounded-full font-mono">{totalSelected}</div>
+                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </div>
+                )}
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
     </div>
   );
 }
