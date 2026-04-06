@@ -17,6 +17,7 @@ export default async function Home() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-2">
             <Sparkles className="w-4 h-4" />
             <span>Built for Developers Discovery</span>
+            <span>Built for Developer Discovery</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground">
             Find Your First <br /> <span className="text-primary">Open Source</span> Contribution
