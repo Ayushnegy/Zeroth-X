@@ -85,7 +85,6 @@ function MilestoneBadge({ milestone }: { milestone: Milestone }) {
 
 function ContributionItem({ item }: { item: Contribution }) {
   const isMerged = item.state === 'closed' && item.mergedAt;
-  const isClosed = item.state === 'closed' && !item.mergedAt;
   const isOpen = item.state === 'open';
 
   return (
@@ -138,24 +137,30 @@ export default function AnalyticsDashboard() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch('/api/analytics');
-        if (!res.ok) {
-          throw new Error('Failed to fetch analytics');
-        }
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } catch (err: any) {
-        setError(err.message || 'An error occurred');
-      } finally {
-        setLoading(false);
+  async function fetchData() {
+    try {
+      const res = await fetch('/api/analytics');
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch analytics');
       }
+
+      const json = await res.json();
+      setData(json);
+
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An error occurred');
+      }
+    } finally {
+      setLoading(false);
     }
-    fetchData();
-  }, []);
+  }
+
+  fetchData();
+}, []);
 
   if (loading) {
     return (
