@@ -31,11 +31,18 @@ export default async function Navbar() {
                 </div>
               </>
             ) : (
-              <form action={handleSignIn}>
-                <button type="submit" className="bg-foreground text-card hover:bg-foreground/90 font-medium px-4 py-2 rounded-md transition-colors shadow-sm text-sm sm:text-base">
-                  Sign in with GitHub
-                </button>
-              </form>
+              <div className="flex items-center gap-2">
+                <form action={handleSignIn.bind(null, 'github')}>
+                  <button type="submit" className="bg-foreground text-card hover:bg-foreground/90 font-medium px-4 py-2 rounded-md transition-colors shadow-sm text-sm sm:text-base">
+                    Sign in with GitHub
+                  </button>
+                </form>
+                <form action={handleSignIn.bind(null, 'google')}>
+                  <button type="submit" className="bg-card text-foreground border border-border hover:bg-secondaryBg font-medium px-4 py-2 rounded-md transition-colors shadow-sm text-sm sm:text-base">
+                    Sign in with Google
+                  </button>
+                </form>
+              </div>
             )}
           </div>
         </div>

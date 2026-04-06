@@ -6,6 +6,6 @@ export async function handleSignOut() {
   await signOut({ redirectTo: '/' });
 }
 
-export async function handleSignIn() {
-  await signIn('github', { redirectTo: '/feed' });
+export async function handleSignIn(provider: 'github' | 'google' = 'github') {
+  await signIn(provider, { redirectTo: '/feed' });
 }

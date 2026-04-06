@@ -5,11 +5,11 @@ import Bookmark from '@/models/Bookmark';
 
 export async function GET() {
   const session = await auth();
-  if (!session?.user?.githubId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!session?.user?.userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
     await dbConnect();
-    const bookmarks = await Bookmark.find({ githubId: session.user.githubId }).sort({ savedAt: -1 });
+    const bookmarks = await Bookmark.find({ userId: session.user.userId }).sort({ savedAt: -1 });
     return NextResponse.json(bookmarks);
   } catch (error: unknown) {
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
@@ -18,19 +18,19 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const session = await auth();
-  if (!session?.user?.githubId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!session?.user?.userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
     const body = await req.json();
     await dbConnect();
 
-    const existing = await Bookmark.findOne({ githubId: session.user.githubId, issueId: body.issueId });
+    const existing = await Bookmark.findOne({ userId: session.user.userId, issueId: body.issueId });
     if (existing) {
       return NextResponse.json({ error: 'Already bookmarked' }, { status: 409 });
     }
 
     const bookmark = await Bookmark.create({
-      githubId: session.user.githubId,
+      userId: session.user.userId,
       ...body
     });
 

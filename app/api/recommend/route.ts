@@ -7,19 +7,20 @@ import { rankIssues } from '@/lib/ranker';
 
 export async function GET() {
   const session = await auth();
-  if (!session?.user?.githubId || !session.user.accessToken) {
+  if (!session?.user?.userId) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
     await dbConnect();
-    const prefs = await UserPrefs.findOne({ githubId: session.user.githubId });
+    const prefs = await UserPrefs.findOne({ userId: session.user.userId });
     
     if (!prefs || !prefs.skills?.length) {
       return NextResponse.json({ error: 'Preferences missing' }, { status: 400 });
     }
 
-    const rawIssues = await searchGithubIssues(prefs.languages || [], session.user.accessToken, 1);
+    const token = session.user.provider === 'github' ? session.user.accessToken : undefined;
+    const rawIssues = await searchGithubIssues(prefs.languages || [], token, 1);
     
     const uniqueRepoUrls = Array.from(new Set(rawIssues.map((i: { repository_url: string }) => i.repository_url))) as string[];
     const repoDetailsMap: Record<string, { stars: number, language: string | null }> = {};
@@ -28,7 +29,7 @@ export async function GET() {
       const repoParts = url.split('/');
       const repoFullName = `${repoParts[repoParts.length - 2]}/${repoParts[repoParts.length - 1]}`;
       try {
-         repoDetailsMap[url] = await fetchRepoDetails(repoFullName, session.user!.accessToken!);
+         repoDetailsMap[url] = await fetchRepoDetails(repoFullName, token);
       } catch {
          repoDetailsMap[url] = { stars: 0, language: null };
       }

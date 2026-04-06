@@ -16,7 +16,7 @@ export default async function Home() {
         <div className="max-w-3xl text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-2">
             <Sparkles className="w-4 h-4" />
-            <span>Built for Beginners</span>
+            <span>Built for Developers Discovery</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-foreground">
             Find Your First <br /> <span className="text-primary">Open Source</span> Contribution
@@ -24,10 +24,15 @@ export default async function Home() {
           <p className="text-xl text-secondaryText max-w-2xl mx-auto">
             Stop searching blindly. Tell us your skills and we&apos;ll instantly match you with beginner-friendly issues from real GitHub repositories.
           </p>
-          <div className="pt-8">
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <form action={async () => { "use server"; const { signIn } = await import('@/lib/auth'); await signIn('github', { redirectTo: '/skills' }); }}>
-              <button className="bg-primary hover:bg-primary/90 text-white font-semibold text-lg px-8 py-4 rounded-xl flex items-center gap-2 mx-auto transition-transform hover:scale-105 active:scale-95 shadow-md">
+              <button className="bg-primary hover:bg-primary/90 text-white font-semibold text-lg px-8 py-4 rounded-xl flex items-center gap-2 transition-transform hover:scale-105 active:scale-95 shadow-md w-full sm:w-auto">
                 Get Started with GitHub <ArrowRight className="w-5 h-5" />
+              </button>
+            </form>
+            <form action={async () => { "use server"; const { signIn } = await import('@/lib/auth'); await signIn('google', { redirectTo: '/skills' }); }}>
+              <button className="bg-card hover:bg-secondaryBg text-foreground border border-border font-semibold text-lg px-8 py-4 rounded-xl flex items-center gap-2 transition-transform hover:scale-105 active:scale-95 shadow-md w-full sm:w-auto">
+                Get Started with Google <ArrowRight className="w-5 h-5" />
               </button>
             </form>
           </div>
@@ -39,7 +44,7 @@ export default async function Home() {
               <ShieldCheck className="w-6 h-6 text-foreground" />
             </div>
             <h3 className="text-xl font-bold mb-2 text-foreground">Step 1: Sign in</h3>
-            <p className="text-secondaryText">Securely authenticate with GitHub to personalize your layout.</p>
+            <p className="text-secondaryText">Securely authenticate with GitHub or Google to personalize your experience.</p>
           </div>
           <div className="bg-card p-6 rounded-2xl border border-border shadow-sm text-center">
             <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">

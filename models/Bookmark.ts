@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IBookmark extends Document {
-  githubId: string;
+  userId: string;
   issueId: number;
   title: string;
   url: string;
@@ -14,7 +14,7 @@ export interface IBookmark extends Document {
 }
 
 const BookmarkSchema: Schema = new Schema({
-  githubId: { type: String, required: true },
+  userId: { type: String, required: true },
   issueId: { type: Number, required: true },
   title: { type: String, required: true },
   url: { type: String, required: true },
@@ -26,7 +26,7 @@ const BookmarkSchema: Schema = new Schema({
   savedAt: { type: Date, default: Date.now }
 });
 
-BookmarkSchema.index({ githubId: 1, issueId: 1 }, { unique: true });
+BookmarkSchema.index({ userId: 1, issueId: 1 }, { unique: true });
 
 const Bookmark: Model<IBookmark> = mongoose.models.Bookmark || mongoose.model<IBookmark>('Bookmark', BookmarkSchema);
 
