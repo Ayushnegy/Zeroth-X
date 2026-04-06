@@ -1,4 +1,4 @@
-export async function searchGithubIssues(languages: string[], accessToken: string, page = 1) {
+export async function searchGithubIssues(languages: string[], accessToken?: string, page = 1) {
   if (!languages || languages.length === 0) {
     return _fetchIssuesForLanguage('', accessToken, page);
   }
@@ -14,7 +14,7 @@ export async function searchGithubIssues(languages: string[], accessToken: strin
   return uniqueItems.slice(0, 50);
 }
 
-async function _fetchIssuesForLanguage(lang: string, accessToken: string, page: number) {
+async function _fetchIssuesForLanguage(lang: string, accessToken: string | undefined, page: number) {
   const queryParts = [
     'is:issue',
     'is:open',
@@ -28,11 +28,16 @@ async function _fetchIssuesForLanguage(lang: string, accessToken: string, page: 
   const q = encodeURIComponent(queryParts.join(' '));
   const url = `https://api.github.com/search/issues?q=${q}&sort=created&order=desc&per_page=50&page=${page}`;
 
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
   const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+    headers,
     cache: 'no-store',
   });
 
@@ -47,13 +52,19 @@ async function _fetchIssuesForLanguage(lang: string, accessToken: string, page: 
   return data.items || [];
 }
 
-export async function fetchRepoDetails(repoFullName: string, accessToken: string) {
+export async function fetchRepoDetails(repoFullName: string, accessToken?: string) {
   const url = `https://api.github.com/repos/${repoFullName}`;
+  
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
   const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      Accept: 'application/vnd.github.v3+json',
-    },
+    headers,
     next: { revalidate: 3600 },
   });
 

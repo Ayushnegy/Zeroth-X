@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IUserPrefs extends Document {
-  githubId: string;
+  userId: string;
   username: string;
   avatar: string;
   skills: string[];
@@ -11,7 +11,7 @@ export interface IUserPrefs extends Document {
 }
 
 const UserPrefsSchema: Schema = new Schema({
-  githubId: { type: String, required: true, unique: true },
+  userId: { type: String, required: true, unique: true },
   username: { type: String, required: true },
   avatar: { type: String },
   skills: { type: [String], default: [] },
