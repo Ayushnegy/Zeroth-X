@@ -120,7 +120,7 @@ export default async function Home() {
 
               {/* right: CTA button */}
               <a
-                href="YOUR_LEARNING_PATH_URL_HERE"
+                href="https://oss-learning-path.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-shrink-0 group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-bold text-base text-white transition-all duration-300 hover:scale-105 active:scale-95"
