@@ -4,7 +4,7 @@
 
 FirstPR Pro is a personalized web application that helps developers discover beginner-friendly open-source issues tailored to their skills and experience.
 
-It integrates with GitHub authentication, analyzes user preferences, and provides a ranked feed of "good first issues" to accelerate your open-source journey.
+It integrates with GitHub authentication, analyzes user preferences, and provides a ranked feed of **“good first issues”** to accelerate your open-source journey.
 
 ---
 
@@ -21,7 +21,24 @@ It integrates with GitHub authentication, analyzes user preferences, and provide
 * 🧠 Skill-based filtering system
 * 📊 Ranked issue feed
 * 🔖 Bookmark issues for later
+* 📚 Learn Open Source section with curated resources
+* 📖 Access to free learning materials (including open-source guides & books)
 * ⚡ Clean and responsive UI
+
+---
+
+## 📚 Learn Open Source
+
+FirstPR Pro includes a dedicated **Learn section** for beginners who are new to open source.
+
+It provides:
+
+* Structured learning resources to understand open source
+* Beginner-friendly guides
+* Access to free educational content
+* Curated book/resource links to get started
+
+👉 This makes the platform not just a discovery tool, but also a **learning companion** for new contributors.
 
 ---
 
@@ -80,27 +97,27 @@ npm run dev
 
 ## 👨‍💻 Team & Contributions
 
-* **Ayush Negi**
+### Ayush Negi
 
-  * Full-stack development & optimization
-  * Authentication (Google & GitHub OAuth)
-  * MongoDB integration & restructuring
-  * Debugging, deployment, and production fixes
-  * UI/UX improvements
+* Full-stack development & optimization
+* Authentication (Google & GitHub OAuth)
+* MongoDB integration & restructuring
+* Debugging, deployment, and production fixes
+* UI/UX improvements
 
-* **Sumanshu Jindal**
+### Sumanshu Jindal
 
-  * Initial project setup and backend foundation
-  * Core architecture and early implementation
-  * Full-stack development
-  * Authentication (Google & GitHub OAuth)
-  * UI/UX implementation
+* Initial project setup and backend foundation
+* Core architecture and early implementation
+* Full-stack development
+* Authentication (Google & GitHub OAuth)
+* UI/UX implementation
 
-* **Tanmay Gaur**
+### Tanmay Gaur
 
-  * Initial database setup and configuration
-  * Initial project architecture
-  * MongoDB integration
+* Initial database setup and configuration
+* Initial project architecture
+* MongoDB integration
 
 ---
 
